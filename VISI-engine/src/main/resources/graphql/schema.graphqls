@@ -1,0 +1,27 @@
+type PropertyMetaType {
+	id: ID!
+	range: String!
+}
+
+type Restriction {
+	onProperty: PropertyMetaType!
+	minCardinality: Int
+	maxCardinality: Int
+	mandatory: Boolean
+	multiple: Boolean
+}
+
+type ElementMetaType {
+	id: ID!
+	properties: [String]
+	restriction(property: String!): Restriction
+	restrictions: [Restriction]
+}
+
+type Query {
+	elementMetaTypes: [ElementMetaType]
+}
+
+schema {
+  query: Query
+}
