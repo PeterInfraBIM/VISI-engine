@@ -1,21 +1,17 @@
-type PropertyMetaType {
+type PropertyType {
 	id: ID!
 	range: String!
-}
-
-type Restriction {
-	onProperty: PropertyMetaType!
 	minCardinality: Int
 	maxCardinality: Int
+	literal: Boolean
 	mandatory: Boolean
 	multiple: Boolean
 }
 
 type ElementMetaType {
 	id: ID!
-	properties: [String]
-	restriction(property: String!): Restriction
-	restrictions: [Restriction]
+	propertyType(id: ID!): PropertyType
+	propertyTypes: [PropertyType]
 }
 
 type Query {

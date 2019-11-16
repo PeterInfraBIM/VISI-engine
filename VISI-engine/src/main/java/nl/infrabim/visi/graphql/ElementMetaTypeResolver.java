@@ -16,25 +16,23 @@ public class ElementMetaTypeResolver implements GraphQLResolver<ElementMetaType>
 		return nl.infrabim.visi.translator.ElementMetaType.get(elementMetaType.getId()).getPropertyNames();
 	}
 
-	public Restriction getRestriction(ElementMetaType elementMetaType, String propertyId) {
+	public PropertyType getPropertyType(ElementMetaType elementMetaType, String propertyId) {
 		PropertyTypeRestriction restriction = getElementType(elementMetaType).getPropertyTypeRestriction(propertyId);
 		if (restriction != null) {
 			String id = restriction.getOnProperty().getId();
-			return new Restriction(new PropertyMetaType(id, getPropertyType(id).getRange()),
-					restriction.getMinCardinality(), restriction.getMaxCardinality(), restriction.isMandatory(),
-					restriction.isMultiple());
+			return new PropertyType(id, elementMetaType);
 		} else {
 			return null;
 		}
 	}
 
-	public List<Restriction> getRestrictions(ElementMetaType elementMetaType) {
-		List<Restriction> restrictions = null;
+	public List<PropertyType> getPropertyTypes(ElementMetaType elementMetaType) {
+		List<PropertyType> restrictions = null;
 		List<String> properties = getProperties(elementMetaType);
 		if (properties != null) {
 			restrictions = new ArrayList<>();
 			for (String id : getProperties(elementMetaType)) {
-				restrictions.add(getRestriction(elementMetaType, id));
+				restrictions.add(getPropertyType(elementMetaType, id));
 			}
 		}
 		return restrictions;
@@ -42,10 +40,6 @@ public class ElementMetaTypeResolver implements GraphQLResolver<ElementMetaType>
 
 	private nl.infrabim.visi.translator.ElementMetaType getElementType(ElementMetaType elementMetaType) {
 		return nl.infrabim.visi.translator.ElementMetaType.get(elementMetaType.getId());
-	}
-
-	private nl.infrabim.visi.translator.PropertyMetaType getPropertyType(String propertyId) {
-		return nl.infrabim.visi.translator.PropertyMetaType.get(propertyId);
 	}
 
 }
