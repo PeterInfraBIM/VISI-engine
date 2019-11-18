@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +71,7 @@ public class VisiXmlRdfTranslator {
 		elementTypeMap = new HashMap<>();
 	}
 
-	private void translate(String visiXmlFilePath) throws ParserConfigurationException, SAXException, IOException {
+	public void translate(String visiXmlFilePath) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document framework = dBuilder.parse(visiXmlFilePath);
@@ -151,6 +152,17 @@ public class VisiXmlRdfTranslator {
 			}
 		}
 		return elementList;
+	}
+
+	public List<ElementType> getElementTypes() {
+		List<ElementType> elementTypes = new ArrayList<>(elementTypeMap.values());
+		Collections.sort(elementTypes, new Comparator<ElementType>() {
+			@Override
+			public int compare(ElementType o1, ElementType o2) {
+				return o1.getId().compareTo(o2.getId());
+			}
+		});
+		return elementTypes;
 	}
 
 }

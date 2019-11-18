@@ -14,7 +14,18 @@ type ElementMetaType {
 	propertyTypes: [PropertyType]
 }
 
+type ElementType {
+	id: ID!
+}
+
+type Framework {
+	file: String!
+	elementTypes: [ElementType]
+}
+
 type Query {
+	frameworkFiles: [String]
+	loadFrameworkFile(file: String!): Framework
 	elementMetaTypes: [ElementMetaType]
 }
 
