@@ -16,6 +16,7 @@ type ElementMetaType {
 
 type ElementType {
 	id: ID!
+	metaType: ElementMetaType!
 }
 
 type Framework {

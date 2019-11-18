@@ -165,4 +165,8 @@ public class VisiXmlRdfTranslator {
 		return elementTypes;
 	}
 
+	public ElementType getElementType(String elementId) {
+		return elementTypeMap.get(elementId);
+	}
+
 }
