@@ -14,14 +14,32 @@ type ElementMetaType {
 	propertyTypes: [PropertyType]
 }
 
-type ElementType {
+interface ElementType {
 	id: ID!
 	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+}
+
+type RoleType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	transactions: [TransactionType]
+}
+
+type TransactionType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	initiator: RoleType
+	executor: RoleType
 }
 
 type Framework {
 	file: String!
-	elementTypes: [ElementType]
+	elementTypes(metaType: String): [ElementType]
+	roleTypes: [RoleType]
+	transactionTypes: [TransactionType]
 }
 
 type Query {

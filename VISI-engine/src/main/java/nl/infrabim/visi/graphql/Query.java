@@ -56,4 +56,5 @@ public class Query implements GraphQLQueryResolver {
 		visiXmlRdfTranslator.translate(filePath);
 		return new Framework(visiXmlFile);
 	}
+
 }
