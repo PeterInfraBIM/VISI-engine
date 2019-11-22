@@ -1,3 +1,5 @@
+scalar DateTime
+
 type PropertyType {
 	id: ID!
 	range: String!
@@ -20,25 +22,73 @@ interface ElementType {
 	propertyValue(propertyName: String!): String
 }
 
+type SimpleElementType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	interfaceType: String
+	state: String
+	helpInfo: String
+}
+
+type ComplexElementType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	helpInfo: String
+	complexElements: [ComplexElementType]
+	simpleElements: [SimpleElementType]
+}
+
+type MessageInTransactionType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	firstMessage: Boolean
+	initiatorToExecutor: Boolean
+	openSecondaryTransactionsAllowed: Boolean
+	message: MessageType
+	previous: [MessageInTransactionType]
+	transaction: TransactionType
+}
+
+type MessageType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	appendixMandatory: Boolean
+}
+
 type RoleType implements ElementType {
 	id: ID!
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
-	transactions: [TransactionType]
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	transactionTypes: [TransactionType]
 }
 
 type TransactionType implements ElementType {
 	id: ID!
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
+	description: String
 	initiator: RoleType
 	executor: RoleType
+	messageInTransactionTypes: [MessageInTransactionType]
 }
 
 type Framework {
 	file: String!
 	elementTypes(metaType: String): [ElementType]
+	complexElementTypes: [ComplexElementType]
+	messageTypes: [MessageType]
 	roleTypes: [RoleType]
+	simpleElementTypes: [SimpleElementType]
 	transactionTypes: [TransactionType]
 }
 

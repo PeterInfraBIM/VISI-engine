@@ -1,5 +1,7 @@
 package nl.infrabim.visi.graphql;
 
+import java.text.ParseException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 
 @Component
 public class RoleTypeResolver extends ElementTypeResolver implements GraphQLResolver<RoleType> {
-	
+
 	public ElementMetaType getMetaType(RoleType elementType) {
 		return super.getMetaType(elementType);
 	}
@@ -17,8 +19,20 @@ public class RoleTypeResolver extends ElementTypeResolver implements GraphQLReso
 	public String getPropertyValue(RoleType elementType, String propertyName) {
 		return super.getPropertyValue(elementType, propertyName);
 	}
+
+	public String getDescription(RoleType elementType) {
+		return super.getDescription(elementType);
+	}
 	
-	public List<TransactionType> getTransactions(RoleType roleType) {
+	public OffsetDateTime getStartDate(RoleType elementType) throws ParseException {
+		return super.getStartDate(elementType);
+	}
+
+	public OffsetDateTime getEndDate(RoleType elementType) throws ParseException {
+		return super.getEndDate(elementType);
+	}
+
+	public List<TransactionType> getTransactionTypes(RoleType roleType) {
 		List<TransactionType> transactions = new ArrayList<>();
 		visiXmlRdfTranslator.getElementTypes().forEach(e -> {
 			if (e.getType().equals("TransactionType")) {

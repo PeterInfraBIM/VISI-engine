@@ -1007,6 +1007,8 @@
 	</ProjectType>
 	<RoleType id="keukenhulp">
 		<description>Keukenhûlp</description>
+		<startDate>2009-01-01T00:00:00.0Z</startDate>
+		<endDate>2010-01-01T00:00:00.0Z</endDate>
 	</RoleType>
 	<RoleType id="klant">
 		<description>Klant</description>
