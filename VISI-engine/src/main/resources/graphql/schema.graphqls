@@ -22,6 +22,23 @@ interface ElementType {
 	propertyValue(propertyName: String!): String
 }
 
+type AppendixType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	complexElements: [ComplexElementType]
+}
+
 type SimpleElementType implements ElementType {
 	id: ID!
 	metaType: ElementMetaType!
@@ -29,7 +46,12 @@ type SimpleElementType implements ElementType {
 	description: String
 	interfaceType: String
 	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
 	helpInfo: String
+	valueList: String
 }
 
 type ComplexElementType implements ElementType {
@@ -37,21 +59,84 @@ type ComplexElementType implements ElementType {
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
 	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
 	helpInfo: String
 	complexElements: [ComplexElementType]
 	simpleElements: [SimpleElementType]
+	minOccurs: Int
+	maxOccurs: Int
 }
 
 type MessageInTransactionType implements ElementType {
 	id: ID!
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
-	firstMessage: Boolean
+	requiredNotify: Int
+	dateLaMu: DateTime
+	userLaMu: String
+	received: Boolean
+	send: Boolean
+	state: String
 	initiatorToExecutor: Boolean
 	openSecondaryTransactionsAllowed: Boolean
+	firstMessage: Boolean
 	message: MessageType
 	previous: [MessageInTransactionType]
 	transaction: TransactionType
+	transactionPhase: TransactionPhaseType
+	group: GroupType
+	appendixTypes: [AppendixType]
+	conditions: [MessageInTransactionTypeCondition]
+	next: [MessageInTransactionType]
+}
+
+type GroupType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+}
+
+type TransactionPhaseType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+}
+
+type MessageInTransactionTypeCondition implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	sendAfter: [MessageInTransactionType]
+	sendBefore: [MessageInTransactionType]
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	helpInfo: String
 }
 
 type MessageType implements ElementType {
@@ -59,7 +144,18 @@ type MessageType implements ElementType {
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
 	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
 	appendixMandatory: Boolean
+	complexElements: [ComplexElementType]
+	appendixTypes: [AppendixType]
 }
 
 type RoleType implements ElementType {
@@ -77,14 +173,26 @@ type TransactionType implements ElementType {
 	metaType: ElementMetaType!
 	propertyValue(propertyName: String!): String
 	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	result: String
 	initiator: RoleType
 	executor: RoleType
+	appendixTypes: [AppendixType]
 	messageInTransactionTypes: [MessageInTransactionType]
 }
 
 type Framework {
 	file: String!
 	elementTypes(metaType: String): [ElementType]
+	appendixTypes: [AppendixType]
 	complexElementTypes: [ComplexElementType]
 	messageTypes: [MessageType]
 	roleTypes: [RoleType]

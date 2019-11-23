@@ -42,13 +42,52 @@ public class ElementTypeResolver {
 		}
 		return null;
 	}
-	
+
 	protected String getState(ElementType elementType) {
 		return getPropertyValue(elementType, "state");
 	}
 
+	protected OffsetDateTime getDateLaMu(ElementType elementType) {
+		String dateLaMu = getPropertyValue(elementType, "dateLaMu");
+		if (dateLaMu != null) {
+			return OffsetDateTime.parse(dateLaMu);
+		}
+		return null;
+	}
+
+	protected String getUserLaMu(ElementType elementType) {
+		return getPropertyValue(elementType, "userLaMu");
+	}
+
+	protected String getLanguage(ElementType elementType) {
+		return getPropertyValue(elementType, "language");
+	}
+
+	protected String getCategory(ElementType elementType) {
+		return getPropertyValue(elementType, "category");
+	}
+
 	protected String getHelpInfo(ElementType elementType) {
 		return getPropertyValue(elementType, "helpInfo");
+	}
+
+	protected String getCode(ElementType elementType) {
+		return getPropertyValue(elementType, "code");
+	}
+
+	protected List<AppendixType> getAppendixTypes(ElementType elementType) {
+		Object appendixTypes = visiXmlRdfTranslator.getElementType(elementType.getId())
+				.getPropertyValue("appendixTypes");
+		if (appendixTypes != null) {
+			List<AppendixType> appendixTypesList = new ArrayList<>();
+			@SuppressWarnings("unchecked")
+			List<String> apLst = (List<String>) appendixTypes;
+			for (String ap : apLst) {
+				appendixTypesList.add(new AppendixType(ap));
+			}
+			return appendixTypesList;
+		}
+		return null;
 	}
 
 	protected List<ComplexElementType> getComplexElements(ElementType elementType) {

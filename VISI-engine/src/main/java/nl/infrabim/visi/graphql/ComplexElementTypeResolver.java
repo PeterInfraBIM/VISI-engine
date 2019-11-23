@@ -31,6 +31,26 @@ public class ComplexElementTypeResolver extends ElementTypeResolver implements G
 		return super.getEndDate(elementType);
 	}
 
+	public String getState(ComplexElementType elementType) {
+		return super.getState(elementType);
+	}
+
+	public OffsetDateTime getDateLaMu(ComplexElementType elementType) {
+		return super.getDateLaMu(elementType);
+	}
+
+	public String getUserLaMu(ComplexElementType elementType) {
+		return super.getUserLaMu(elementType);
+	}
+
+	public String getLanguage(ComplexElementType elementType) {
+		return super.getLanguage(elementType);
+	}
+
+	public String getCategory(ComplexElementType elementType) {
+		return super.getCategory(elementType);
+	}
+
 	public String getHelpInfo(ComplexElementType elementType) {
 		return super.getHelpInfo(elementType);
 	}
@@ -41,6 +61,16 @@ public class ComplexElementTypeResolver extends ElementTypeResolver implements G
 
 	public List<SimpleElementType> getSimpleElements(ComplexElementType elementType) {
 		return super.getSimpleElements(elementType);
+	}
+
+	public Integer getMinOccurs(ComplexElementType elementType) {
+		String minOccursStr = getPropertyValue(elementType, "minOccurs");
+		return minOccursStr != null ? Integer.parseInt(minOccursStr) : null;
+	}
+
+	public Integer getMaxOccurs(ComplexElementType elementType) {
+		String maxOccursStr = getPropertyValue(elementType, "maxOccurs");
+		return maxOccursStr != null ? Integer.parseInt(maxOccursStr) : null;
 	}
 
 }

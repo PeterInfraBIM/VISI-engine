@@ -22,6 +22,9 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 			if (metaType.isPresent()) {
 				if (e.getMetaType().getId().equals(metaType.get())) {
 					switch (metaType.get()) {
+					case "AppendixType":
+						elementTypes.add(new AppendixType(e.getId()));
+						break;
 					case "ComplexElementType":
 						elementTypes.add(new ComplexElementType(e.getId()));
 						break;
@@ -54,6 +57,11 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<AppendixType> getAppendixTypes(Framework framework) {
+		return (List<AppendixType>) getElementTypes(framework, Optional.of("AppendixType"));
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ComplexElementType> getComplexElementTypes(Framework framework) {
 		return (List<ComplexElementType>) getElementTypes(framework, Optional.of("ComplexElementType"));
 	}
@@ -72,7 +80,7 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 	public List<SimpleElementType> getSimpleElementTypes(Framework framework) {
 		return (List<SimpleElementType>) getElementTypes(framework, Optional.of("SimpleElementType"));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TransactionType> getTransactionTypes(Framework framework) {
 		return (List<TransactionType>) getElementTypes(framework, Optional.of("TransactionType"));
