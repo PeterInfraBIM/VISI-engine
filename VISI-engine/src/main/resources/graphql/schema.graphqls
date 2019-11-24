@@ -22,6 +22,58 @@ interface ElementType {
 	propertyValue(propertyName: String!): String
 }
 
+type ProjectType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	namespace: String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	complexElements: [ComplexElementType]
+}
+
+type PersonType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	complexElements: [ComplexElementType]
+}
+
+type OrganisationType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	complexElements: [ComplexElementType]
+}
+
 type AppendixType implements ElementType {
 	id: ID!
 	metaType: ElementMetaType!
@@ -165,6 +217,17 @@ type RoleType implements ElementType {
 	description: String
 	startDate: DateTime
 	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	responsibilityScope: String
+	responsibilityTask: String
+	responsibilitySupportTask: String
+	responsibilityFeedback: String
 	transactionTypes: [TransactionType]
 }
 
@@ -194,9 +257,16 @@ type Framework {
 	elementTypes(metaType: String): [ElementType]
 	appendixTypes: [AppendixType]
 	complexElementTypes: [ComplexElementType]
+	groupTypes: [GroupType]
+	messageInTransactionTypes: [MessageInTransactionType]
+	messageInTransactionTypeConditions: [MessageInTransactionTypeCondition]
 	messageTypes: [MessageType]
+	organisationTypes: [OrganisationType]
+	personTypes: [PersonType]
+	projectTypes: [ProjectType]
 	roleTypes: [RoleType]
 	simpleElementTypes: [SimpleElementType]
+	transactionPhaseTypes: [TransactionPhaseType]
 	transactionTypes: [TransactionType]
 }
 
