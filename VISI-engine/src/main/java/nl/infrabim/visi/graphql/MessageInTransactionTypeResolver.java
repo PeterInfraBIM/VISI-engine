@@ -135,4 +135,7 @@ public class MessageInTransactionTypeResolver extends ElementTypeResolver
 		return nextMitts;
 	}
 
+	public List<ElementCondition> getElementConditions(MessageInTransactionType elementType) {
+		return super.getElementConditions(elementType);
+	}
 }

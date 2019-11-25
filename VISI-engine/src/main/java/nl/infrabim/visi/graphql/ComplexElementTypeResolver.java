@@ -73,4 +73,28 @@ public class ComplexElementTypeResolver extends ElementTypeResolver implements G
 		return maxOccursStr != null ? Integer.parseInt(maxOccursStr) : null;
 	}
 
+	public List<ComplexElementType> getInvComplexElements(ComplexElementType elementType) {
+		return super.getInverses(elementType, ComplexElementType.class, "complexElements");
+	}
+
+	public List<ElementCondition> getInvElementConditions(ComplexElementType elementType) {
+		return super.getInverses(elementType, ElementCondition.class, "complexElements");
+	}
+
+	public List<MessageType> getInvMessages(ComplexElementType elementType) {
+		return super.getInverses(elementType, MessageType.class, "complexElements");
+	}
+
+	public List<OrganisationType> getInvOrganisations(ComplexElementType elementType) {
+		return super.getInverses(elementType, OrganisationType.class, "complexElements");
+	}
+
+	public List<PersonType> getInvPersons(ComplexElementType elementType) {
+		return super.getInverses(elementType, PersonType.class, "complexElements");
+	}
+
+	public List<ProjectType> getInvProjects(ComplexElementType elementType) {
+		return super.getInverses(elementType, ProjectType.class, "complexElements");
+	}
+
 }

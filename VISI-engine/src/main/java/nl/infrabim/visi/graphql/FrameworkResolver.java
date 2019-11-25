@@ -28,6 +28,9 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 					case "ComplexElementType":
 						elementTypes.add(new ComplexElementType(e.getId()));
 						break;
+					case "ElementCondition":
+						elementTypes.add(new ElementCondition(e.getId()));
+						break;
 					case "GroupType":
 						elementTypes.add(new GroupType(e.getId()));
 						break;
@@ -61,6 +64,9 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 					case "TransactionType":
 						elementTypes.add(new TransactionType(e.getId()));
 						break;
+					case "UserDefinedType":
+						elementTypes.add(new UserDefinedType(e.getId()));
+						break;
 					default:
 						elementTypes.add(new ElementType(e.getId()));
 						break;
@@ -74,9 +80,17 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 		return elementTypes;
 	}
 
+	public AppendixType getAppendixType(Framework framework, String id) {
+		return new AppendixType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<AppendixType> getAppendixTypes(Framework framework) {
 		return (List<AppendixType>) getElementTypes(framework, Optional.of("AppendixType"));
+	}
+
+	public ComplexElementType getComplexElementType(Framework framework, String id) {
+		return new ComplexElementType(id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -84,14 +98,35 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 		return (List<ComplexElementType>) getElementTypes(framework, Optional.of("ComplexElementType"));
 	}
 
+	public ElementCondition getElementCondition(Framework framework, String id) {
+		return new ElementCondition(id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ElementCondition> getElementConditions(Framework framework) {
+		return (List<ElementCondition>) getElementTypes(framework, Optional.of("ElementCondition"));
+	}
+
+	public GroupType getGroupType(Framework framework, String id) {
+		return new GroupType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<GroupType> getGroupTypes(Framework framework) {
 		return (List<GroupType>) getElementTypes(framework, Optional.of("GroupType"));
 	}
 
+	public MessageInTransactionType getMessageInTransactionType(Framework framework, String id) {
+		return new MessageInTransactionType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<MessageInTransactionType> getMessageInTransactionTypes(Framework framework) {
 		return (List<MessageInTransactionType>) getElementTypes(framework, Optional.of("MessageInTransactionType"));
+	}
+
+	public MessageInTransactionTypeCondition getMessageInTransactionTypeCondition(Framework framework, String id) {
+		return new MessageInTransactionTypeCondition(id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,9 +135,17 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 				Optional.of("MessageInTransactionTypeCondition"));
 	}
 
+	public MessageType getMessageType(Framework framework, String id) {
+		return new MessageType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<MessageType> getMessageTypes(Framework framework) {
 		return (List<MessageType>) getElementTypes(framework, Optional.of("MessageType"));
+	}
+
+	public OrganisationType getOrganisationType(Framework framework, String id) {
+		return new OrganisationType(id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,9 +153,17 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 		return (List<OrganisationType>) getElementTypes(framework, Optional.of("OrganisationType"));
 	}
 
+	public PersonType getPersonType(Framework framework, String id) {
+		return new PersonType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<PersonType> getPersonTypes(Framework framework) {
 		return (List<PersonType>) getElementTypes(framework, Optional.of("PersonType"));
+	}
+
+	public ProjectType getProjectType(Framework framework, String id) {
+		return new ProjectType(id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -120,9 +171,17 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 		return (List<ProjectType>) getElementTypes(framework, Optional.of("ProjectType"));
 	}
 
+	public RoleType getRoleType(Framework framework, String id) {
+		return new RoleType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<RoleType> getRoleTypes(Framework framework) {
 		return (List<RoleType>) getElementTypes(framework, Optional.of("RoleType"));
+	}
+
+	public SimpleElementType getSimpleElementType(Framework framework, String id) {
+		return new SimpleElementType(id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,13 +189,30 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 		return (List<SimpleElementType>) getElementTypes(framework, Optional.of("SimpleElementType"));
 	}
 
+	public TransactionPhaseType getTransactionPhaseType(Framework framework, String id) {
+		return new TransactionPhaseType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<TransactionPhaseType> getTransactionPhaseTypes(Framework framework) {
 		return (List<TransactionPhaseType>) getElementTypes(framework, Optional.of("TransactionPhaseType"));
 	}
 
+	public TransactionType getTransactionType(Framework framework, String id) {
+		return new TransactionType(id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<TransactionType> getTransactionTypes(Framework framework) {
 		return (List<TransactionType>) getElementTypes(framework, Optional.of("TransactionType"));
+	}
+
+	public UserDefinedType getUserDefinedType(Framework framework, String id) {
+		return new UserDefinedType(id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserDefinedType> getUserDefinedTypes(Framework framework) {
+		return (List<UserDefinedType>) getElementTypes(framework, Optional.of("UserDefinedType"));
 	}
 }

@@ -1,6 +1,7 @@
 package nl.infrabim.visi.graphql;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -51,6 +52,15 @@ public class SimpleElementTypeResolver extends ElementTypeResolver implements Gr
 
 	public String getValueList(SimpleElementType elementType) {
 		return getPropertyValue(elementType, "valueList");
+	}
+
+	public List<ElementCondition> getInvElementConditions(SimpleElementType elementType) {
+		return super.getInverses(elementType, ElementCondition.class, "simpleElement");
+	}
+
+	public UserDefinedType getUserDefinedType(SimpleElementType elementType) {
+		String userDefinedTypeValue = getPropertyValue(elementType, "userDefinedType");
+		return userDefinedTypeValue != null ? new UserDefinedType(userDefinedTypeValue) : null;
 	}
 
 }

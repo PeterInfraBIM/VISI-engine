@@ -89,6 +89,23 @@ type AppendixType implements ElementType {
 	helpInfo: String
 	code: String
 	complexElements: [ComplexElementType]
+	invMessages: [MessageType]
+	invMessageInTransactions: [MessageInTransactionType]
+	invTransactions: [TransactionType]
+}
+
+type UserDefinedType implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	dateLaMu: DateTime
+	userLaMu: String
+	baseType: String
+	xsdRestriction: String
+	language: String
+	helpInfo: String
+	invSimpleElements: [SimpleElementType]
 }
 
 type SimpleElementType implements ElementType {
@@ -104,6 +121,8 @@ type SimpleElementType implements ElementType {
 	category: String
 	helpInfo: String
 	valueList: String
+	userDefinedType: UserDefinedType
+	invElementConditions: [ElementCondition]
 }
 
 type ComplexElementType implements ElementType {
@@ -123,6 +142,11 @@ type ComplexElementType implements ElementType {
 	simpleElements: [SimpleElementType]
 	minOccurs: Int
 	maxOccurs: Int
+	invElementConditions: [ElementCondition]
+	invComplexElements: [ComplexElementType]
+	invOrganisations: [OrganisationType]
+	invPersons: [PersonType]
+	invProjects: [ProjectType]
 }
 
 type MessageInTransactionType implements ElementType {
@@ -146,6 +170,7 @@ type MessageInTransactionType implements ElementType {
 	appendixTypes: [AppendixType]
 	conditions: [MessageInTransactionTypeCondition]
 	next: [MessageInTransactionType]
+	elementConditions: [ElementCondition]
 }
 
 type GroupType implements ElementType {
@@ -208,6 +233,19 @@ type MessageType implements ElementType {
 	appendixMandatory: Boolean
 	complexElements: [ComplexElementType]
 	appendixTypes: [AppendixType]
+	messageInTransactionTypes: [MessageInTransactionType]
+}
+
+type ElementCondition implements ElementType {
+	id: ID!
+	metaType: ElementMetaType!
+	propertyValue(propertyName: String!): String
+	description: String
+	condition: String
+	helpInfo: String
+	complexElements: [ComplexElementType]
+	simpleElement: SimpleElementType
+	messageInTransaction: MessageInTransactionType
 }
 
 type RoleType implements ElementType {
@@ -255,19 +293,36 @@ type TransactionType implements ElementType {
 type Framework {
 	file: String!
 	elementTypes(metaType: String): [ElementType]
+	appendixType(id: ID!): AppendixType
 	appendixTypes: [AppendixType]
+	complexElementType(id: ID!): ComplexElementType
 	complexElementTypes: [ComplexElementType]
+	elementCondition(id: ID!): ElementCondition
+	elementConditions: [ElementCondition]
+	groupType(id: ID!): GroupType
 	groupTypes: [GroupType]
+	messageInTransactionType(id: ID!): MessageInTransactionType
 	messageInTransactionTypes: [MessageInTransactionType]
+	messageInTransactionTypeCondition(id: ID!): MessageInTransactionTypeCondition
 	messageInTransactionTypeConditions: [MessageInTransactionTypeCondition]
+	messageType(id: ID!): MessageType
 	messageTypes: [MessageType]
+	organisationType(id: ID!): OrganisationType
 	organisationTypes: [OrganisationType]
+	personType(id: ID!): PersonType
 	personTypes: [PersonType]
+	projectType(id: ID!): ProjectType
 	projectTypes: [ProjectType]
+	roleType(id: ID!): RoleType
 	roleTypes: [RoleType]
+	simpleElementType(id: ID!): SimpleElementType
 	simpleElementTypes: [SimpleElementType]
+	transactionPhaseType(id: ID!): TransactionPhaseType
 	transactionPhaseTypes: [TransactionPhaseType]
+	transactionType(id: ID!): TransactionType
 	transactionTypes: [TransactionType]
+	userDefinedType(id: ID!): UserDefinedType
+	userDefinedTypes: [UserDefinedType]
 }
 
 type Query {

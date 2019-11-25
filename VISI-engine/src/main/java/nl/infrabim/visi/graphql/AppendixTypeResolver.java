@@ -62,4 +62,16 @@ public class AppendixTypeResolver extends ElementTypeResolver implements GraphQL
 	public List<ComplexElementType> getComplexElements(AppendixType elementType) {
 		return super.getComplexElements(elementType);
 	}
+
+	public List<MessageType> getInvMessages(AppendixType elementType) {
+		return super.getInverses(elementType, MessageType.class, "appendixTypes");
+	}
+
+	public List<MessageInTransactionType> getInvMessageInTransactions(AppendixType elementType) {
+		return super.getInverses(elementType, MessageInTransactionType.class, "appendixTypes");
+	}
+
+	public List<TransactionType> getInvTransactions(AppendixType elementType) {
+		return super.getInverses(elementType, TransactionType.class, "appendixTypes");
+	}
 }

@@ -2,6 +2,7 @@ package nl.infrabim.visi.graphql;
 
 import java.text.ParseException;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -72,5 +73,16 @@ public class MessageTypeResolver extends ElementTypeResolver implements GraphQLR
 		return super.getAppendixTypes(elementType);
 	}
 	
-
+	public List<MessageInTransactionType> getMessageInTransactionTypes(MessageType elementType) {
+		List<MessageInTransactionType> mitts = new ArrayList<>();
+		visiXmlRdfTranslator.getElementTypes().forEach((e) -> {
+			if (e.getType().equals("MessageInTransactionType")) {
+				String message = (String) e.getPropertyValue("message");
+				if (message != null && message.equals(elementType.getId())) {
+					mitts.add(new MessageInTransactionType(e.getId()));
+				}
+			}
+		});
+		return mitts;
+	}
 }
