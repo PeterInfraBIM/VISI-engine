@@ -205,6 +205,9 @@ public class ElementTypeResolver {
 		case "MessageInTransactionType":
 			inverses.add((T) new MessageInTransactionType(s.getId()));
 			break;
+		case "MessageInTransactionTypeCondition":
+			inverses.add((T) new MessageInTransactionTypeCondition(s.getId()));
+			break;
 		case "MessageType":
 			inverses.add((T) new MessageType(s.getId()));
 			break;

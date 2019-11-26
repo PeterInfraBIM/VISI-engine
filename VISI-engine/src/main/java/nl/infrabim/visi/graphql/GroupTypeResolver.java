@@ -2,6 +2,7 @@ package nl.infrabim.visi.graphql;
 
 import java.text.ParseException;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -52,6 +53,10 @@ public class GroupTypeResolver extends ElementTypeResolver implements GraphQLRes
 
 	public String getHelpInfo(GroupType elementType) {
 		return super.getHelpInfo(elementType);
+	}
+
+	public List<MessageInTransactionType> getInvGroups(GroupType elementType) {
+		return super.getInverses(elementType, MessageInTransactionType.class, "group");
 	}
 
 }

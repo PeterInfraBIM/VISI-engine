@@ -118,24 +118,20 @@ public class MessageInTransactionTypeResolver extends ElementTypeResolver
 		return null;
 	}
 
-	public List<MessageInTransactionType> getNext(MessageInTransactionType elementType) {
-		List<MessageInTransactionType> nextMitts = new ArrayList<>();
-		visiXmlRdfTranslator.getElementTypes().forEach(m -> {
-			if (m.getType().equals("MessageInTransactionType")) {
-				Object previous = m.getPropertyValue("previous");
-				if (previous != null) {
-					@SuppressWarnings("unchecked")
-					List<String> previousList = (List<String>) previous;
-					if (previousList.contains(elementType.getId())) {
-						nextMitts.add(new MessageInTransactionType(m.getId()));
-					}
-				}
-			}
-		});
-		return nextMitts;
+	public List<ElementCondition> getInvElementConditions(MessageInTransactionType elementType) {
+		return super.getInverses(elementType, ElementCondition.class, "messageInTransaction");
 	}
 
-	public List<ElementCondition> getElementConditions(MessageInTransactionType elementType) {
-		return super.getElementConditions(elementType);
+	public List<MessageInTransactionType> getInvPrevious(MessageInTransactionType elementType) {
+		return super.getInverses(elementType, MessageInTransactionType.class, "previous");
 	}
+
+	public List<MessageInTransactionTypeCondition> getInvSendAfter(MessageInTransactionType elementType) {
+		return super.getInverses(elementType, MessageInTransactionTypeCondition.class, "sendAfter");
+	}
+	
+	public List<MessageInTransactionTypeCondition> getInvSendBefore(MessageInTransactionType elementType) {
+		return super.getInverses(elementType, MessageInTransactionTypeCondition.class, "sendBefore");
+	}
+
 }

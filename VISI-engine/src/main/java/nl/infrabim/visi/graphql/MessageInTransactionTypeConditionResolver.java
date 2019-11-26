@@ -35,7 +35,8 @@ public class MessageInTransactionTypeConditionResolver extends ElementTypeResolv
 	}
 
 	public List<MessageInTransactionType> getSendBefore(MessageInTransactionTypeCondition elementType) {
-		Object sendBeforeValue = visiXmlRdfTranslator.getElementType(elementType.getId()).getPropertyValue("sendBefore");
+		Object sendBeforeValue = visiXmlRdfTranslator.getElementType(elementType.getId())
+				.getPropertyValue("sendBefore");
 		if (sendBeforeValue != null) {
 			List<MessageInTransactionType> sendBeforeList = new ArrayList<>();
 			@SuppressWarnings("unchecked")
@@ -62,5 +63,9 @@ public class MessageInTransactionTypeConditionResolver extends ElementTypeResolv
 
 	public String getHelpInfo(MessageInTransactionTypeCondition elementType) {
 		return super.getHelpInfo(elementType);
+	}
+
+	public List<MessageInTransactionType> getInvConditions(MessageInTransactionTypeCondition elementType) {
+		return getInverses(elementType, MessageInTransactionType.class, "conditions");
 	}
 }

@@ -59,9 +59,24 @@ public class TransactionTypeResolver extends ElementTypeResolver implements Grap
 	public String getCode(TransactionType elementType) {
 		return super.getCode(elementType);
 	}
-	
+
 	public String getResult(TransactionType elementType) {
 		return getPropertyValue(elementType, "result");
+	}
+
+	public List<TransactionType> getSubTransactions(TransactionType transactionType) {
+		Object subTransactionsValue = visiXmlRdfTranslator.getElementType(transactionType.getId())
+				.getPropertyValue("subTransactions");
+		if (subTransactionsValue != null) {
+			@SuppressWarnings("unchecked")
+			List<String> subTransactionsList = (List<String>) subTransactionsValue;
+			List<TransactionType> subTransactions = new ArrayList<>();
+			for (String subTransaction : subTransactionsList) {
+				subTransactions.add(new TransactionType(subTransaction));
+			}
+			return subTransactions;
+		}
+		return null;
 	}
 
 	public RoleType getInitiator(TransactionType transactionType) {
@@ -73,22 +88,16 @@ public class TransactionTypeResolver extends ElementTypeResolver implements Grap
 		Object executor = visiXmlRdfTranslator.getElementType(transactionType.getId()).getPropertyValue("executor");
 		return executor != null ? new RoleType(executor.toString()) : null;
 	}
-	
+
 	public List<AppendixType> getAppendixTypes(TransactionType elementType) {
 		return super.getAppendixTypes(elementType);
 	}
-	
-	public List<MessageInTransactionType> getMessageInTransactionTypes(TransactionType transactionType) {
-		List<MessageInTransactionType> mitts = new ArrayList<>();
-		visiXmlRdfTranslator.getElementTypes().forEach((e) -> {
-			if (e.getType().equals("MessageInTransactionType")) {
-				String transaction = (String) e.getPropertyValue("transaction");
-				if (transaction != null && transaction.equals(transactionType.getId())) {
-					mitts.add(new MessageInTransactionType(e.getId()));
-				}
-			}
-		});
-		return mitts;
+
+	public List<TransactionType> getInvSubTransactions(TransactionType transactionType) {
+		return getInverses(transactionType, TransactionType.class, "subTransactions");
 	}
 
+	public List<MessageInTransactionType> getInvTransactions(TransactionType transactionType) {
+		return getInverses(transactionType, MessageInTransactionType.class, "transaction");
+	}
 }

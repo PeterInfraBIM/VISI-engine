@@ -2,7 +2,6 @@ package nl.infrabim.visi.graphql;
 
 import java.text.ParseException;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -76,17 +75,12 @@ public class RoleTypeResolver extends ElementTypeResolver implements GraphQLReso
 		return getPropertyValue(elementType, "responsibilityFeedback");
 	}
 
-	public List<TransactionType> getTransactionTypes(RoleType roleType) {
-		List<TransactionType> transactions = new ArrayList<>();
-		visiXmlRdfTranslator.getElementTypes().forEach(e -> {
-			if (e.getType().equals("TransactionType")) {
-				if (e.getPropertyValue("initiator").equals(roleType.getId())
-						|| e.getPropertyValue("executor").equals(roleType.getId())) {
-					transactions.add(new TransactionType(e.getId()));
-				}
-			}
-		});
-		return transactions;
+	public List<TransactionType> getInvExecutors(RoleType roleType) {
+		return getInverses(roleType, TransactionType.class, "executor");
+	}
+
+	public List<TransactionType> getInvInitiators(RoleType roleType) {
+		return getInverses(roleType, TransactionType.class, "initiator");
 	}
 
 }

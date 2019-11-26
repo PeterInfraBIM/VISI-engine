@@ -2,7 +2,6 @@ package nl.infrabim.visi.graphql;
 
 import java.text.ParseException;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ public class MessageTypeResolver extends ElementTypeResolver implements GraphQLR
 	public String getPropertyValue(MessageType elementType, String propertyName) {
 		return super.getPropertyValue(elementType, propertyName);
 	}
-	
+
 	public String getDescription(MessageType elementType) {
 		return super.getDescription(elementType);
 	}
@@ -64,25 +63,17 @@ public class MessageTypeResolver extends ElementTypeResolver implements GraphQLR
 		String appendixMandatory = getPropertyValue(elementType, "appendixMandatory");
 		return appendixMandatory != null ? Boolean.parseBoolean((String) appendixMandatory) : false;
 	}
-	
+
 	public List<ComplexElementType> getComplexElements(MessageType elementType) {
 		return super.getComplexElements(elementType);
 	}
-	
+
 	public List<AppendixType> getAppendixTypes(MessageType elementType) {
 		return super.getAppendixTypes(elementType);
 	}
-	
-	public List<MessageInTransactionType> getMessageInTransactionTypes(MessageType elementType) {
-		List<MessageInTransactionType> mitts = new ArrayList<>();
-		visiXmlRdfTranslator.getElementTypes().forEach((e) -> {
-			if (e.getType().equals("MessageInTransactionType")) {
-				String message = (String) e.getPropertyValue("message");
-				if (message != null && message.equals(elementType.getId())) {
-					mitts.add(new MessageInTransactionType(e.getId()));
-				}
-			}
-		});
-		return mitts;
+
+	public List<MessageInTransactionType> getInvMessages(MessageType elementType) {
+		return getInverses(elementType, MessageInTransactionType.class, "message");
 	}
+
 }

@@ -169,8 +169,10 @@ type MessageInTransactionType implements ElementType {
 	group: GroupType
 	appendixTypes: [AppendixType]
 	conditions: [MessageInTransactionTypeCondition]
-	next: [MessageInTransactionType]
-	elementConditions: [ElementCondition]
+	invElementConditions: [ElementCondition]
+	invPrevious: [MessageInTransactionType]
+	invSendAfter: [MessageInTransactionTypeCondition]
+	invSendBefore: [MessageInTransactionTypeCondition]
 }
 
 type GroupType implements ElementType {
@@ -186,6 +188,7 @@ type GroupType implements ElementType {
 	language: String
 	category: String
 	helpInfo: String
+	invGroups: [MessageInTransactionType]
 }
 
 type TransactionPhaseType implements ElementType {
@@ -202,6 +205,7 @@ type TransactionPhaseType implements ElementType {
 	category: String
 	helpInfo: String
 	code: String
+	invTransactionPhases: [MessageInTransactionType]
 }
 
 type MessageInTransactionTypeCondition implements ElementType {
@@ -214,6 +218,7 @@ type MessageInTransactionTypeCondition implements ElementType {
 	dateLaMu: DateTime
 	userLaMu: String
 	helpInfo: String
+	invConditions: [MessageInTransactionType]
 }
 
 type MessageType implements ElementType {
@@ -233,7 +238,7 @@ type MessageType implements ElementType {
 	appendixMandatory: Boolean
 	complexElements: [ComplexElementType]
 	appendixTypes: [AppendixType]
-	messageInTransactionTypes: [MessageInTransactionType]
+	invMessages: [MessageInTransactionType]
 }
 
 type ElementCondition implements ElementType {
@@ -266,7 +271,8 @@ type RoleType implements ElementType {
 	responsibilityTask: String
 	responsibilitySupportTask: String
 	responsibilityFeedback: String
-	transactionTypes: [TransactionType]
+	invExecutors: [TransactionType]
+	invInitiators: [TransactionType]
 }
 
 type TransactionType implements ElementType {
@@ -284,10 +290,12 @@ type TransactionType implements ElementType {
 	helpInfo: String
 	code: String
 	result: String
+	subTransactions: [TransactionType]
 	initiator: RoleType
 	executor: RoleType
 	appendixTypes: [AppendixType]
-	messageInTransactionTypes: [MessageInTransactionType]
+	invSubTransactions: [TransactionType]
+	invTransactions: [MessageInTransactionType]
 }
 
 type Framework {

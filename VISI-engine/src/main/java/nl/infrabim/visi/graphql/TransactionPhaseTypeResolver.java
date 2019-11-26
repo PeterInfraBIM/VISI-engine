@@ -2,6 +2,7 @@ package nl.infrabim.visi.graphql;
 
 import java.text.ParseException;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -56,6 +57,10 @@ public class TransactionPhaseTypeResolver extends ElementTypeResolver implements
 
 	public String getCode(TransactionPhaseType elementType) {
 		return super.getCode(elementType);
+	}
+
+	public List<MessageInTransactionType> getInvTransactionPhases(TransactionPhaseType elementType) {
+		return getInverses(elementType, MessageInTransactionType.class, "transactionPhase");
 	}
 
 }
