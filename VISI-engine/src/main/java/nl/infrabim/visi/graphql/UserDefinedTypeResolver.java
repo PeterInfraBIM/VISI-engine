@@ -1,7 +1,6 @@
 package nl.infrabim.visi.graphql;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;

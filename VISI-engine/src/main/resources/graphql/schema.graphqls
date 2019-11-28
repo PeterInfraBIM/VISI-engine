@@ -339,6 +339,32 @@ type Query {
 	elementMetaTypes: [ElementMetaType]
 }
 
+input RoleTypeInput {
+	id: ID!
+	description: String
+	startDate: DateTime
+	endDate: DateTime
+	state: String
+	dateLaMu: DateTime
+	userLaMu: String
+	language: String
+	category: String
+	helpInfo: String
+	code: String
+	responsibilityScope: String
+	responsibilityTask: String
+	responsibilitySupportTask: String
+	responsibilityFeedback: String
+}
+
+type Mutation {
+	createFramework(file: String!): Framework!
+	createElementType(type: String!, id: String!, file: String): ElementType!
+	saveFramework(file: String!): Framework!
+	updateRoleType(input: RoleTypeInput): RoleType! 
+}
+
 schema {
   query: Query
+  mutation: Mutation
 }

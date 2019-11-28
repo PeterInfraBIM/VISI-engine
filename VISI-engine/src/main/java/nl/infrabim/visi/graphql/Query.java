@@ -18,7 +18,7 @@ import nl.infrabim.visi.translator.VisiXmlRdfTranslator;
 
 @Component
 public class Query implements GraphQLQueryResolver {
-
+	static final String UPLOAD_FOLDER_PATH = "src/main/Resources/static/upload";
 	private final VisiXmlRdfTranslator visiXmlRdfTranslator;
 
 	public Query(VisiXmlRdfTranslator visiXmlRdfTranslator) {
@@ -42,8 +42,12 @@ public class Query implements GraphQLQueryResolver {
 	}
 
 	public List<String> getFrameworkFiles() throws IOException {
+		return getStoredFrameworkFiles();
+	}
+
+	static List<String> getStoredFrameworkFiles() throws IOException {
 		List<String> frameworkFiles = new ArrayList<>();
-		Path path = Paths.get("src/main/Resources/static/upload");
+		Path path = Paths.get(UPLOAD_FOLDER_PATH);
 		Files.list(path).forEach((f) -> {
 			frameworkFiles.add(f.getFileName().toString());
 		});
@@ -52,7 +56,7 @@ public class Query implements GraphQLQueryResolver {
 
 	public Framework loadFrameworkFile(String visiXmlFile)
 			throws ParserConfigurationException, SAXException, IOException {
-		String filePath = "src/main/Resources/static/upload/" + visiXmlFile;
+		String filePath = UPLOAD_FOLDER_PATH + "/" + visiXmlFile;
 		visiXmlRdfTranslator.translate(filePath);
 		return new Framework(visiXmlFile);
 	}

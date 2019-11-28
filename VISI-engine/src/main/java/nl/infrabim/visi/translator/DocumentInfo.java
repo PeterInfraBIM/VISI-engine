@@ -9,6 +9,10 @@ public class DocumentInfo {
 	private String schemaLocation;
 
 	public DocumentInfo() {
+		this.tagName = "visiXML_VISI_Systematics";
+		this.xmlns = "http://www.visi.nl/schemas/20160331";
+		this.xsi = "http://www.w3.org/2001/XMLSchema-instance";
+		this.schemaLocation = "http://www.visi.nl/schemas/20160331 C:\20160331.xsd";
 	}
 
 	public DocumentInfo(Element documentElement) {

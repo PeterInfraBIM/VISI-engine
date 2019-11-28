@@ -18,65 +18,18 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 
 	public List<? extends ElementType> getElementTypes(Framework framework, Optional<String> metaType) {
 		List<ElementType> elementTypes = new ArrayList<>();
-		visiXmlRdfTranslator.getElementTypes().forEach((e) -> {
-			if (metaType.isPresent()) {
-				if (e.getMetaType().getId().equals(metaType.get())) {
-					switch (metaType.get()) {
-					case "AppendixType":
-						elementTypes.add(new AppendixType(e.getId()));
-						break;
-					case "ComplexElementType":
-						elementTypes.add(new ComplexElementType(e.getId()));
-						break;
-					case "ElementCondition":
-						elementTypes.add(new ElementCondition(e.getId()));
-						break;
-					case "GroupType":
-						elementTypes.add(new GroupType(e.getId()));
-						break;
-					case "MessageInTransactionType":
-						elementTypes.add(new MessageInTransactionType(e.getId()));
-						break;
-					case "MessageInTransactionTypeCondition":
-						elementTypes.add(new MessageInTransactionTypeCondition(e.getId()));
-						break;
-					case "MessageType":
-						elementTypes.add(new MessageType(e.getId()));
-						break;
-					case "OrganisationType":
-						elementTypes.add(new OrganisationType(e.getId()));
-						break;
-					case "PersonType":
-						elementTypes.add(new PersonType(e.getId()));
-						break;
-					case "ProjectType":
-						elementTypes.add(new ProjectType(e.getId()));
-						break;
-					case "RoleType":
-						elementTypes.add(new RoleType(e.getId()));
-						break;
-					case "SimpleElementType":
-						elementTypes.add(new SimpleElementType(e.getId()));
-						break;
-					case "TransactionPhaseType":
-						elementTypes.add(new TransactionPhaseType(e.getId()));
-						break;
-					case "TransactionType":
-						elementTypes.add(new TransactionType(e.getId()));
-						break;
-					case "UserDefinedType":
-						elementTypes.add(new UserDefinedType(e.getId()));
-						break;
-					default:
-						elementTypes.add(new ElementType(e.getId()));
-						break;
+		List<nl.infrabim.visi.translator.ElementType> elements = visiXmlRdfTranslator.getElementTypes();
+		if (elements != null) {
+			elements.forEach((e) -> {
+				if (metaType.isPresent()) {
+					if (e.getMetaType().getId().equals(metaType.get())) {
+						elementTypes.add(ElementTypes.valueOf(metaType.get()).createInstance(e.getId()));
 					}
+				} else {
+					elementTypes.add(ElementTypes.valueOf(e.getMetaType().getId()).createInstance(e.getId()));
 				}
-			} else {
-				e.getMetaType().getId();
-				elementTypes.add(new ElementType(e.getId()));
-			}
-		});
+			});
+		}
 		return elementTypes;
 	}
 

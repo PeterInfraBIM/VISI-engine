@@ -34,6 +34,7 @@ public class VisiXmlRdfTranslator {
 	public final static String VISI_RDF_URI = "http://infrabim.nl/visi/visi16";
 	public final static String VISI_NS = "http://www.visi.nl/schemas/20160331";
 
+	private String currentFrameworkFilePath;
 	private Map<String, ElementType> elementTypeMap;
 	private DocumentInfo documentInfo;
 
@@ -72,6 +73,10 @@ public class VisiXmlRdfTranslator {
 	}
 
 	public void translate(String visiXmlFilePath) throws ParserConfigurationException, SAXException, IOException {
+		if (visiXmlFilePath.equals(currentFrameworkFilePath))
+			return;
+		currentFrameworkFilePath = visiXmlFilePath;
+		elementTypeMap.clear();
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document framework = dBuilder.parse(visiXmlFilePath);
@@ -105,7 +110,7 @@ public class VisiXmlRdfTranslator {
 		}
 	}
 
-	private void save(String outputFilePath) throws ParserConfigurationException, TransformerFactoryConfigurationError,
+	public void save(String outputFilePath) throws ParserConfigurationException, TransformerFactoryConfigurationError,
 			FileNotFoundException, TransformerException {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -167,6 +172,22 @@ public class VisiXmlRdfTranslator {
 
 	public ElementType getElementType(String elementId) {
 		return elementTypeMap.get(elementId);
+	}
+
+	public void createFramework(String file) throws ParserConfigurationException, FileNotFoundException,
+			TransformerFactoryConfigurationError, TransformerException {
+		elementTypeMap.clear();
+		documentInfo = new DocumentInfo();
+		save(file);
+	}
+
+	public void createElementType(String type, String id) {
+		ElementType elementType = new ElementType(type, id);
+		elementTypeMap.put(id, elementType);
+		PropertyTypeRestriction description = elementType.getMetaType().getPropertyTypeRestriction("description");
+		if (description != null) {
+			elementType.putPropertyValue(description.getOnProperty().getId(), id);
+		}
 	}
 
 }
