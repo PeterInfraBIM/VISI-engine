@@ -106,16 +106,26 @@ public class ElementTypeResolver {
 	}
 
 	protected List<SimpleElementType> getSimpleElements(ElementType elementType) {
-		Object simpleElements = visiXmlRdfTranslator.getElementType(elementType.getId())
-				.getPropertyValue("simpleElements");
-		if (simpleElements != null) {
-			List<SimpleElementType> simpleElementsList = new ArrayList<>();
-			@SuppressWarnings("unchecked")
-			List<String> seLst = (List<String>) simpleElements;
-			for (String se : seLst) {
-				simpleElementsList.add(new SimpleElementType(se));
+		if (elementType.getClass().getSimpleName().equals("ElementCondition")) {
+			String simpleElement = (String) visiXmlRdfTranslator.getElementType(elementType.getId())
+					.getPropertyValue("simpleElement");
+			if (simpleElement != null) {
+				List<SimpleElementType> simpleElementsList = new ArrayList<>();
+				simpleElementsList.add(new SimpleElementType(simpleElement));
+				return simpleElementsList;
 			}
-			return simpleElementsList;
+		} else {
+			Object simpleElements = visiXmlRdfTranslator.getElementType(elementType.getId())
+					.getPropertyValue("simpleElements");
+			if (simpleElements != null) {
+				List<SimpleElementType> simpleElementsList = new ArrayList<>();
+				@SuppressWarnings("unchecked")
+				List<String> seLst = (List<String>) simpleElements;
+				for (String se : seLst) {
+					simpleElementsList.add(new SimpleElementType(se));
+				}
+				return simpleElementsList;
+			}
 		}
 		return null;
 	}
@@ -177,7 +187,7 @@ public class ElementTypeResolver {
 				if (invPropertyValue != null) {
 					if (invPropertyValue instanceof String) {
 						if (((String) invPropertyValue).equals(elementType.getId())) {
-							instantiate(simpleClassName, inverses, s);							
+							instantiate(simpleClassName, inverses, s);
 						}
 					} else {
 						List<String> valueList = (List<String>) invPropertyValue;

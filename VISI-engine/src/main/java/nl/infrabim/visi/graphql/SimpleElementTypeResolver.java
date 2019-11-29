@@ -54,13 +54,17 @@ public class SimpleElementTypeResolver extends ElementTypeResolver implements Gr
 		return getPropertyValue(elementType, "valueList");
 	}
 
-	public List<ElementCondition> getInvElementConditions(SimpleElementType elementType) {
-		return super.getInverses(elementType, ElementCondition.class, "simpleElement");
-	}
-
 	public UserDefinedType getUserDefinedType(SimpleElementType elementType) {
 		String userDefinedTypeValue = getPropertyValue(elementType, "userDefinedType");
 		return userDefinedTypeValue != null ? new UserDefinedType(userDefinedTypeValue) : null;
+	}
+
+	public List<ComplexElementType> getInvSimpleElements(SimpleElementType elementType) {
+		return super.getInverses(elementType, ComplexElementType.class, "simpleElements");
+	} 
+	
+	public List<ElementCondition> getInvElementConditions(SimpleElementType elementType) {
+		return super.getInverses(elementType, ElementCondition.class, "simpleElement");
 	}
 
 }

@@ -123,6 +123,7 @@ type SimpleElementType implements ElementType {
 	valueList: String
 	userDefinedType: UserDefinedType
 	invElementConditions: [ElementCondition]
+	invSimpleElements: [ComplexElementType]
 }
 
 type ComplexElementType implements ElementType {
@@ -144,6 +145,7 @@ type ComplexElementType implements ElementType {
 	maxOccurs: Int
 	invElementConditions: [ElementCondition]
 	invComplexElements: [ComplexElementType]
+	invMessages: [MessageType]
 	invOrganisations: [OrganisationType]
 	invPersons: [PersonType]
 	invProjects: [ProjectType]
