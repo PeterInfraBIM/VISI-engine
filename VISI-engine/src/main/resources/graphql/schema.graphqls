@@ -253,6 +253,9 @@ type ElementCondition implements ElementType {
 	complexElements: [ComplexElementType]
 	simpleElement: SimpleElementType
 	messageInTransaction: MessageInTransactionType
+	parentComplexElement: ComplexElementType
+	childComplexElement: ComplexElementType
+	priority: Int
 }
 
 type RoleType implements ElementType {
@@ -308,7 +311,8 @@ type Framework {
 	complexElementType(id: ID!): ComplexElementType
 	complexElementTypes: [ComplexElementType]
 	elementCondition(id: ID!): ElementCondition
-	elementConditions: [ElementCondition]
+	elementConditions(mitt: ID, ce1: ID, ce2: ID, se: ID): [ElementCondition]
+	allElementConditions(mitt: ID!, ce1: ID!, ce2: ID, se: ID!): [ElementCondition]
 	groupType(id: ID!): GroupType
 	groupTypes: [GroupType]
 	messageInTransactionType(id: ID!): MessageInTransactionType

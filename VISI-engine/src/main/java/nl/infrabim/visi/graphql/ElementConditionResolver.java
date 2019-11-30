@@ -6,8 +6,15 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
+import nl.infrabim.visi.translator.ElementType;
+import nl.infrabim.visi.translator.VisiXmlRdfTranslator;
+
 @Component
 public class ElementConditionResolver extends ElementTypeResolver implements GraphQLResolver<ElementCondition> {
+
+	public ElementConditionResolver(VisiXmlRdfTranslator visiXmlRdfTranslator) {
+		this.visiXmlRdfTranslator = visiXmlRdfTranslator;
+	}
 
 	public ElementMetaType getMetaType(ElementCondition elementType) {
 		return super.getMetaType(elementType);
@@ -44,6 +51,40 @@ public class ElementConditionResolver extends ElementTypeResolver implements Gra
 		return messageInTransactionTypeValue != null
 				? new MessageInTransactionType((String) messageInTransactionTypeValue)
 				: null;
+	}
+
+	public ComplexElementType getParentComplexElement(ElementCondition elementType) {
+		Object complexElementsValue = visiXmlRdfTranslator.getElementType(elementType.getId())
+				.getPropertyValue("complexElements");
+		if (complexElementsValue != null) {
+			@SuppressWarnings("unchecked")
+			List<String> complexElementsList = (List<String>) complexElementsValue;
+			return complexElementsList.size() > 0 ? new ComplexElementType(complexElementsList.get(0)) : null;
+		}
+		return null;
+	}
+
+	public ComplexElementType getChildComplexElement(ElementCondition elementType) {
+		Object complexElementsValue = visiXmlRdfTranslator.getElementType(elementType.getId())
+				.getPropertyValue("complexElements");
+		if (complexElementsValue != null) {
+			@SuppressWarnings("unchecked")
+			List<String> complexElementsList = (List<String>) complexElementsValue;
+			return complexElementsList.size() > 1 ? new ComplexElementType(complexElementsList.get(1)) : null;
+		}
+		return null;
+	}
+
+	public Integer getPriority(ElementCondition elementType) {
+		int priority = 0;
+		ElementType elementCondition = visiXmlRdfTranslator.getElementType(elementType.getId());
+		if (elementCondition.getPropertyValue("messageInTransaction") != null)
+			priority += 4;
+		if (elementCondition.getPropertyValue("complexElements") != null)
+			priority += 2;
+		if (elementCondition.getPropertyValue("simpleElement") != null)
+			priority += 1;
+		return priority;
 	}
 
 }

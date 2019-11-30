@@ -56,8 +56,88 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ElementCondition> getElementConditions(Framework framework) {
-		return (List<ElementCondition>) getElementTypes(framework, Optional.of("ElementCondition"));
+	public List<ElementCondition> getElementConditions(Framework framework, Optional<String> mitt, Optional<String> ce1,
+			Optional<String> ce2, Optional<String> se) {
+		List<ElementCondition> filteredElementConditions = new ArrayList<>();
+		List<ElementCondition> elementConditions = (List<ElementCondition>) getElementTypes(framework,
+				Optional.of("ElementCondition"));
+		for (ElementCondition ec : elementConditions) {
+			ElementConditionResolver elementConditionResolver = new ElementConditionResolver(visiXmlRdfTranslator);
+			if (mitt.isPresent()) {
+				MessageInTransactionType messageInTransaction = elementConditionResolver.getMessageInTransaction(ec);
+				if (messageInTransaction == null) {
+					if (!mitt.get().equals("null"))
+						continue;
+
+				} else {
+					if (!messageInTransaction.getId().equals(mitt.get()))
+						continue;
+				}
+			}
+			if (ce1.isPresent()) {
+				ComplexElementType parentComplexElement = elementConditionResolver.getParentComplexElement(ec);
+				if (parentComplexElement == null) {
+					if (!ce1.get().equals("null"))
+						continue;
+
+				} else {
+					if (!parentComplexElement.getId().equals(ce1.get()))
+						continue;
+				}
+			}
+			if (ce2.isPresent()) {
+				ComplexElementType childComplexElement = elementConditionResolver.getChildComplexElement(ec);
+				if (childComplexElement == null) {
+					if (!ce2.get().equals("null"))
+						continue;
+
+				} else {
+					if (!childComplexElement.getId().equals(ce2.get()))
+						continue;
+				}
+			}
+			if (se.isPresent()) {
+				SimpleElementType simpleElement = elementConditionResolver.getSimpleElement(ec);
+				if (simpleElement == null) {
+					if (!se.get().equals("null"))
+						continue;
+
+				} else {
+					if (!simpleElement.getId().equals(se.get()))
+						continue;
+				}
+			}
+			filteredElementConditions.add(ec);
+		}
+		return filteredElementConditions;
+	}
+
+	public List<ElementCondition> getAllElementConditions(Framework framework, String mitt, String ce1,
+			Optional<String> ce2, String se) {
+		List<ElementCondition> elementConditions = new ArrayList<>();
+		elementConditions
+				.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1), ce2, Optional.of(se)));
+		elementConditions
+				.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1), ce2, Optional.of("null")));
+		elementConditions.addAll(
+				getElementConditions(framework, Optional.of(mitt), ce2, Optional.of("null"), Optional.of("null")));
+		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of("null"),
+				Optional.of("null"), Optional.of(se)));
+		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of("null"),
+				Optional.of("null"), Optional.of("null")));
+		elementConditions
+				.addAll(getElementConditions(framework, Optional.of("null"), Optional.of(ce1), ce2, Optional.of(se)));
+		elementConditions.addAll(
+				getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of(se)));
+		elementConditions.addAll(
+				getElementConditions(framework, Optional.of("null"), Optional.of(ce1), ce2, Optional.of("null")));
+		elementConditions.addAll(
+				getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of("null")));
+		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of("null"),
+				Optional.of("null"), Optional.of(se)));
+		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of("null"),
+				Optional.of("null"), Optional.of("null")));
+		return elementConditions;
 	}
 
 	public GroupType getGroupType(Framework framework, String id) {
