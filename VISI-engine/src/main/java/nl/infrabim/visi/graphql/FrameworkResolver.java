@@ -119,24 +119,39 @@ public class FrameworkResolver implements GraphQLResolver<Framework> {
 				.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1), ce2, Optional.of(se)));
 		elementConditions
 				.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1), ce2, Optional.of("null")));
-		elementConditions.addAll(
-				getElementConditions(framework, Optional.of(mitt), ce2, Optional.of("null"), Optional.of("null")));
+		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1),
+				Optional.of("null"), Optional.of(se)));
+		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of(ce1),
+				Optional.of("null"), Optional.of("null")));
+		if (ce2.isPresent()) {
+			elementConditions.addAll(
+					getElementConditions(framework, Optional.of(mitt), ce2, Optional.of("null"), Optional.of(se)));
+			elementConditions.addAll(
+					getElementConditions(framework, Optional.of(mitt), ce2, Optional.of("null"), Optional.of("null")));
+		}
 		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of("null"),
 				Optional.of("null"), Optional.of(se)));
 		elementConditions.addAll(getElementConditions(framework, Optional.of(mitt), Optional.of("null"),
 				Optional.of("null"), Optional.of("null")));
 		elementConditions
 				.addAll(getElementConditions(framework, Optional.of("null"), Optional.of(ce1), ce2, Optional.of(se)));
-		elementConditions.addAll(
-				getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of(se)));
-		elementConditions.addAll(
-				getElementConditions(framework, Optional.of("null"), Optional.of(ce1), ce2, Optional.of("null")));
-		elementConditions.addAll(
-				getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of("null")));
+		elementConditions
+				.addAll(getElementConditions(framework, Optional.of("null"), Optional.of(ce1), ce2, Optional.of("null")));
+		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of(ce1),
+				Optional.of("null"), Optional.of(se)));
+		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of(ce1),
+				Optional.of("null"), Optional.of("null")));
+		if (ce2.isPresent()) {
+			elementConditions.addAll(
+					getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of(se)));
+			elementConditions.addAll(
+					getElementConditions(framework, Optional.of("null"), ce2, Optional.of("null"), Optional.of("null")));
+		}
 		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of("null"),
 				Optional.of("null"), Optional.of(se)));
 		elementConditions.addAll(getElementConditions(framework, Optional.of("null"), Optional.of("null"),
 				Optional.of("null"), Optional.of("null")));
+
 		return elementConditions;
 	}
 

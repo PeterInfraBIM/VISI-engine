@@ -79,9 +79,13 @@ public class ElementConditionResolver extends ElementTypeResolver implements Gra
 		int priority = 0;
 		ElementType elementCondition = visiXmlRdfTranslator.getElementType(elementType.getId());
 		if (elementCondition.getPropertyValue("messageInTransaction") != null)
-			priority += 4;
-		if (elementCondition.getPropertyValue("complexElements") != null)
+			priority += 8;
+		if (elementCondition.getPropertyValue("complexElements") != null) {
 			priority += 2;
+			@SuppressWarnings("unchecked")
+			List<String> propertyList = (List<String>)elementCondition.getPropertyValue("complexElements");
+			priority *= propertyList.size();
+		}
 		if (elementCondition.getPropertyValue("simpleElement") != null)
 			priority += 1;
 		return priority;
